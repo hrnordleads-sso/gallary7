@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingredients | Diet Soda</title>
-    <meta name="description" content="What’s inside Pure Zero — clean sparkling water, natural flavors, and zero sugar.">
+    <title>Ingredients · Product Detail | Diet Soda</title>
+    <meta name="description" content="Immersive product detail — ingredients, nutrition, and scroll-linked 3D can.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="site.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
     <div id="bubbles-container"></div>
 
     <header class="header">
         <a class="logo" href="index.html">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             <span>Soda</span>
         </a>
         <nav class="nav" aria-label="Primary">
@@ -28,50 +28,160 @@
             <a href="eco.html" class="nav-item">Eco</a>
             <a href="reviews.html" class="nav-item">Reviews</a>
         </nav>
-        <a class="contact-btn" href="mailto:hello@dietsoda.example">Contact Us</a>
+        <a class="contact-btn" href="contact.html">Contact Us</a>
     </header>
 
-    <main class="page">
-        <p class="page-kicker">Inside the can</p>
-        <h1 class="page-title">Clean<br>formula</h1>
-        <p class="page-lead">
-            Every pour stays crisp because the list stays short — sparkling water, natural flavor,
-            plant sweetness, and nothing that dulls the finish.
-        </p>
+    <main class="cinema">
+        <section class="cinema-hero" style="min-height:88vh">
+            <div class="cinema-copy">
+                <p class="page-kicker" id="flavor-kicker">Diet Classic</p>
+                <h1 class="page-title">Inside<br>the can</h1>
+                <p class="page-lead" id="flavor-lead">
+                    Scroll to orbit the can while the formula, tasting notes, and nutrition reveal around it —
+                    same lighting and materials as the homepage hero.
+                </p>
+                <div class="flavor-switch">
+                    <button type="button" class="flavor-card active" data-flavor="classic" aria-pressed="true">
+                        <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Green%20Soda.png" alt="">
+                        <strong>Diet Classic</strong>
+                        <span>$2.99</span>
+                    </button>
+                    <button type="button" class="flavor-card" data-flavor="blue" aria-pressed="false">
+                        <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Blue%20Soda.png" alt="" style="filter:brightness(0.85)">
+                        <strong>Zero Lime</strong>
+                        <span>$2.99</span>
+                    </button>
+                </div>
+            </div>
+            <div class="stage">
+                <div class="stage-glow"></div>
+                <model-viewer class="berry-orb b-a" id="berry-a" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none"></model-viewer>
+                <model-viewer class="berry-orb b-b" id="berry-b" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none"></model-viewer>
+                <model-viewer
+                    id="detail-can"
+                    class="soda-can soda-can--detail"
+                    src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb"
+                    alt="Diet Soda product detail"
+                    shadow-intensity="0"
+                    environment-image="neutral"
+                    exposure="1.5"
+                    interaction-prompt="none"
+                    camera-orbit="-18deg 78deg 340%"
+                    field-of-view="30deg"
+                    disable-zoom>
+                </model-viewer>
+            </div>
+        </section>
 
-        <div class="grid grid-2">
-            <article class="glass-card">
-                <h3>Core blend</h3>
-                <ul>
-                    <li>Carbonated water</li>
-                    <li>Natural berry & citrus flavors</li>
-                    <li>Stevia leaf extract</li>
-                    <li>Citric acid for lift</li>
-                </ul>
-            </article>
-            <article class="glass-card">
-                <h3>Left out on purpose</h3>
-                <ul>
-                    <li>Zero sugar</li>
-                    <li>No artificial colors</li>
-                    <li>No sticky aftertaste syrups</li>
-                    <li>No mystery blends</li>
-                </ul>
-            </article>
-        </div>
-
-        <div class="stat-row">
-            <div class="glass-card stat"><strong>0g</strong><span>Sugar per can</span></div>
-            <div class="glass-card stat"><strong>4</strong><span>Named ingredients</span></div>
-            <div class="glass-card stat"><strong>12oz</strong><span>Ice-cold pour</span></div>
-        </div>
-
-        <a class="primary-btn" href="taste.html">
-            Explore taste
-            <span class="plus-icon">+</span>
-        </a>
+        <section class="section-split" id="detail-scroll">
+            <div class="sticky-can-wrap" aria-hidden="true"></div>
+            <div>
+                <article class="glass-card reveal" style="margin-bottom:1.25rem">
+                    <h3>Core blend</h3>
+                    <ul>
+                        <li>Carbonated water</li>
+                        <li id="flavor-note">Natural berry flavor</li>
+                        <li>Stevia leaf extract</li>
+                        <li>Citric acid for lift</li>
+                    </ul>
+                </article>
+                <article class="glass-card reveal" style="margin-bottom:1.25rem">
+                    <h3>Tasting notes</h3>
+                    <p id="tasting-copy">Opening: ripe cherry. Mid: soft berry. Finish: dry sparkle that stays clean.</p>
+                </article>
+                <article class="glass-card reveal" style="margin-bottom:1.25rem">
+                    <h3>Nutrition (12oz)</h3>
+                    <ul>
+                        <li>Calories 0</li>
+                        <li>Total sugars 0g</li>
+                        <li>Sodium 35mg</li>
+                        <li>Caffeine free</li>
+                    </ul>
+                </article>
+                <div class="stat-row reveal">
+                    <div class="glass-card stat"><strong>0g</strong><span>Sugar</span></div>
+                    <div class="glass-card stat"><strong>4</strong><span>Ingredients</span></div>
+                    <div class="glass-card stat"><strong>12oz</strong><span>Can</span></div>
+                </div>
+                <a class="primary-btn reveal" href="taste.html" style="margin-top:1.75rem">
+                    Back to shop
+                    <span class="plus-icon">+</span>
+                </a>
+            </div>
+        </section>
     </main>
 
-    <script src="bubbles.js"></script>
+    <script src="soda-assets.js"></script>
+    <script src="soda-core.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const initial = params.get("flavor") === "blue" ? "blue" : "classic";
+      const copy = {
+        classic: {
+          kicker: "Diet Classic",
+          lead: "Cherry-forward brightness with a soft berry roundness — scroll to orbit the can through formula and nutrition.",
+          note: "Natural berry flavor",
+          tasting: "Opening: ripe cherry. Mid: soft berry. Finish: dry sparkle that stays clean.",
+        },
+        blue: {
+          kicker: "Zero Lime",
+          lead: "Cool citrus snap with a mineral edge — scroll to orbit the can through formula and nutrition.",
+          note: "Natural citrus flavor",
+          tasting: "Opening: fresh lime zest. Mid: cool citrus. Finish: icy mineral.",
+        },
+      };
+
+      const live = SodaSite.bootSecondary({ flavor: initial });
+      const can = document.getElementById("detail-can");
+      const berries = ["berry-a", "berry-b"].map((id) => document.getElementById(id));
+      const cards = Array.from(document.querySelectorAll(".flavor-card"));
+
+      function applyCopy(flavor) {
+        const c = copy[flavor];
+        document.getElementById("flavor-kicker").textContent = c.kicker;
+        document.getElementById("flavor-lead").textContent = c.lead;
+        document.getElementById("flavor-note").textContent = c.note;
+        document.getElementById("tasting-copy").textContent = c.tasting;
+        cards.forEach((card) => {
+          const on = card.dataset.flavor === flavor;
+          card.classList.toggle("active", on);
+          card.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+      }
+
+      applyCopy(initial);
+      live.floatBerries(berries);
+      live.revealOnScroll(".reveal");
+      // Scroll owns camera orbit on detail (avoids fighting pointer tilt).
+      live.bindScrollOrbit(can, {
+        trigger: document.body,
+        start: "top top",
+        end: "bottom bottom",
+        fromYaw: -18,
+        toYaw: 48,
+        fromPitch: 78,
+        toPitch: 98,
+        fromDist: 340,
+        toDist: 270,
+        scrub: 1.15,
+      });
+
+      can.addEventListener("load", async () => {
+        await live.preloadTextures(can);
+        live.applyCanTexture(can, initial);
+        berries.forEach((b) => {
+          b.src = SodaAssets.themes[initial].berry;
+        });
+      });
+
+      cards.forEach((card) => {
+        card.addEventListener("click", async () => {
+          const flavor = card.dataset.flavor;
+          applyCopy(flavor);
+          history.replaceState(null, "", "ingredients.html?flavor=" + flavor);
+          await live.spinSwapFlavor(can, flavor, berries);
+        });
+      });
+    </script>
 </body>
 </html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Diet Soda</title>
+    <meta name="description" content="Contact Pure Zero — premium animated hero with a working message form.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+    <div id="bubbles-container"></div>
+
+    <header class="header">
+        <a class="logo" href="index.html">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Soda</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="ingredients.html" class="nav-item">Ingredients</a>
+            <a href="taste.html" class="nav-item">Taste</a>
+            <a href="eco.html" class="nav-item">Eco</a>
+            <a href="reviews.html" class="nav-item">Reviews</a>
+        </nav>
+        <a class="contact-btn" href="contact.html" aria-current="page">Contact Us</a>
+    </header>
+
+    <main class="cinema">
+        <section class="cinema-hero">
+            <div class="cinema-copy reveal">
+                <p class="page-kicker">Say hello</p>
+                <h1 class="page-title">Let’s keep<br>it cold</h1>
+                <p class="page-lead">
+                    Wholesale, press, or just a note about your favorite flavor — send a message and we’ll get back fast.
+                </p>
+
+                <form class="glass-card contact-form" id="contact-form" action="mailto:hello@dietsoda.example" method="post" enctype="text/plain">
+                    <label>
+                        Name
+                        <input name="name" type="text" autocomplete="name" required placeholder="Your name">
+                    </label>
+                    <label>
+                        Email
+                        <input name="email" type="email" autocomplete="email" required placeholder="you@brand.com">
+                    </label>
+                    <label>
+                        Message
+                        <textarea name="message" required placeholder="Tell us what you’re after"></textarea>
+                    </label>
+                    <button class="primary-btn" type="submit">
+                        Send message
+                        <span class="plus-icon">+</span>
+                    </button>
+                    <p class="form-note" id="form-status" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+
+            <div class="stage">
+                <div class="stage-glow"></div>
+                <model-viewer class="berry-orb b-a" id="berry-a" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.05" interaction-prompt="none"></model-viewer>
+                <model-viewer class="leaf-orb l-a" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none"></model-viewer>
+                <model-viewer
+                    id="contact-can"
+                    class="soda-can"
+                    src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb"
+                    alt="Diet Soda contact hero"
+                    shadow-intensity="0"
+                    environment-image="neutral"
+                    exposure="1.5"
+                    interaction-prompt="none"
+                    camera-orbit="12deg 90deg 360%"
+                    field-of-view="30deg"
+                    disable-zoom>
+                </model-viewer>
+            </div>
+        </section>
+    </main>
+
+    <script src="soda-assets.js"></script>
+    <script src="soda-core.js"></script>
+    <script>
+      const live = SodaSite.bootSecondary({ flavor: "classic" });
+      const can = document.getElementById("contact-can");
+      const berry = document.getElementById("berry-a");
+      const form = document.getElementById("contact-form");
+      const status = document.getElementById("form-status");
+
+      live.bindPointerTilt(can, { yawAmp: 30, pitchAmp: 12, distance: "360%" });
+      live.floatBerries([berry]);
+      live.revealOnScroll(".reveal", { y: 28, start: "top 95%" });
+
+      can.addEventListener("load", async () => {
+        await live.preloadTextures(can);
+        live.applyCanTexture(can, "classic");
+      });
+
+      form.addEventListener("submit", (e) => {
+        const data = new FormData(form);
+        const name = String(data.get("name") || "").trim();
+        const email = String(data.get("email") || "").trim();
+        const message = String(data.get("message") || "").trim();
+
+        if (!name || !email || !message) {
+          e.preventDefault();
+          status.textContent = "Please fill in every field.";
+          return;
+        }
+
+        // No backend connected — open mail client with composed body (mailto action).
+        status.textContent = "Opening your mail app…";
+        if (window.gsap && !live.prefersReducedMotion()) {
+          gsap.fromTo(form, { y: 0 }, { y: -6, duration: 0.18, yoyo: true, repeat: 1, ease: "power1.inOut" });
+        }
+      });
+
+      form.querySelectorAll("input, textarea").forEach((field) => {
+        field.addEventListener("focus", () => {
+          if (window.gsap && !live.prefersReducedMotion()) {
+            gsap.to(field, { borderColor: "#fbcfe8", duration: 0.25 });
+          }
+        });
+      });
+    </script>
+</body>
+</html>

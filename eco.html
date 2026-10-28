@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco | Diet Soda</title>
-    <meta name="description" content="Recyclable cans, lighter packaging, and a cleaner pour — Pure Zero with less waste.">
+    <title>Eco · Our Story | Diet Soda</title>
+    <meta name="description" content="Cinematic story of Pure Zero — lighter footprint, recyclable can, cleaner pour.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="site.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
     <div id="bubbles-container"></div>
 
     <header class="header">
         <a class="logo" href="index.html">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             <span>Soda</span>
         </a>
         <nav class="nav" aria-label="Primary">
@@ -28,44 +28,125 @@
             <a href="eco.html" class="nav-item active">Eco</a>
             <a href="reviews.html" class="nav-item">Reviews</a>
         </nav>
-        <a class="contact-btn" href="mailto:hello@dietsoda.example">Contact Us</a>
+        <a class="contact-btn" href="contact.html">Contact Us</a>
     </header>
 
-    <main class="page">
-        <p class="page-kicker">Lighter footprint</p>
-        <h1 class="page-title">Refresh<br>without waste</h1>
-        <p class="page-lead">
-            The can is recyclable aluminum. The formula skips sugar syrups. Packaging stays slim so
-            more flavor ships with less filler.
-        </p>
+    <main class="cinema">
+        <section class="cinema-hero">
+            <div class="cinema-copy">
+                <p class="page-kicker">Our story</p>
+                <h1 class="page-title">Refresh<br>without waste</h1>
+                <p class="page-lead">
+                    A scroll-driven story with the can as the recurring hero — parallax depth, elegant text reveals,
+                    and the same teal atmosphere as Home.
+                </p>
+                <a class="primary-btn" href="reviews.html">
+                    Hear from drinkers
+                    <span class="plus-icon">+</span>
+                </a>
+            </div>
+            <div class="stage">
+                <div class="stage-glow"></div>
+                <model-viewer class="leaf-orb l-a" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none"></model-viewer>
+                <model-viewer class="leaf-orb l-b" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="0.9" interaction-prompt="none"></model-viewer>
+                <model-viewer class="berry-orb b-a" id="berry-a" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.05" interaction-prompt="none"></model-viewer>
+                <model-viewer
+                    id="story-can"
+                    class="soda-can"
+                    src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb"
+                    alt="Diet Soda story can"
+                    shadow-intensity="0"
+                    environment-image="neutral"
+                    exposure="1.45"
+                    interaction-prompt="none"
+                    camera-orbit="10deg 88deg 350%"
+                    field-of-view="30deg"
+                    disable-zoom>
+                </model-viewer>
+            </div>
+        </section>
 
-        <div class="grid grid-3">
-            <article class="glass-card">
-                <h3>Recyclable can</h3>
-                <p>Aluminum that can return to the loop again and again — no single-use plastic bottle.</p>
-            </article>
-            <article class="glass-card">
-                <h3>Lean formula</h3>
-                <p>No sugar syrups to refine, truck, or thicken the pour. Less process, cleaner sip.</p>
-            </article>
-            <article class="glass-card">
-                <h3>Compact ship</h3>
-                <p>Sleek multipacks cut empty space so every crate carries more refreshment, less air.</p>
-            </article>
-        </div>
+        <section class="section-split" id="story-scroll">
+            <div class="sticky-can-wrap">
+                <model-viewer
+                    id="story-can-sticky"
+                    class="soda-can soda-can--detail"
+                    src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb"
+                    alt=""
+                    shadow-intensity="0"
+                    environment-image="neutral"
+                    exposure="1.45"
+                    interaction-prompt="none"
+                    camera-orbit="-10deg 82deg 320%"
+                    field-of-view="30deg"
+                    disable-zoom>
+                </model-viewer>
+            </div>
+            <div class="story-rail">
+                <article class="story-beat reveal">
+                    <p class="page-kicker">01 · Origin</p>
+                    <h2 class="page-title" style="font-size:clamp(2.8rem,6vw,4.5rem)">Start with less</h2>
+                    <p class="page-lead">We cut sugar syrups first — then built flavor that still feels premium in the hand and on the tongue.</p>
+                </article>
+                <article class="story-beat reveal">
+                    <p class="page-kicker">02 · Can</p>
+                    <h2 class="page-title" style="font-size:clamp(2.8rem,6vw,4.5rem)">Aluminum loop</h2>
+                    <p class="page-lead">Every can is recyclable metal meant to return again — no plastic bottle, no single-use aftertaste.</p>
+                </article>
+                <article class="story-beat reveal">
+                    <p class="page-kicker">03 · Ship</p>
+                    <h2 class="page-title" style="font-size:clamp(2.8rem,6vw,4.5rem)">Compact crates</h2>
+                    <p class="page-lead">Slim multipacks cut empty air so more refreshment moves with less packaging waste.</p>
+                </article>
+                <article class="story-beat reveal">
+                    <p class="page-kicker">04 · Promise</p>
+                    <h2 class="page-title" style="font-size:clamp(2.8rem,6vw,4.5rem)">Zero, still lush</h2>
+                    <p class="page-lead">The brand stays playful and cinematic — clean formula, loud presence, soft pink accents on glass chrome.</p>
+                </article>
+            </div>
+        </section>
 
-        <div class="stat-row">
-            <div class="glass-card stat"><strong>100%</strong><span>Recyclable can</span></div>
-            <div class="glass-card stat"><strong>0</strong><span>Plastic bottles</span></div>
-            <div class="glass-card stat"><strong>Slim</strong><span>Pack footprint</span></div>
-        </div>
-
-        <a class="primary-btn" href="reviews.html">
-            Read reviews
-            <span class="plus-icon">+</span>
-        </a>
+        <section class="section">
+            <div class="stat-row reveal">
+                <div class="glass-card stat"><strong>100%</strong><span>Recyclable can</span></div>
+                <div class="glass-card stat"><strong>0</strong><span>Plastic bottles</span></div>
+                <div class="glass-card stat"><strong>Slim</strong><span>Pack footprint</span></div>
+            </div>
+        </section>
     </main>
 
-    <script src="bubbles.js"></script>
+    <script src="soda-assets.js"></script>
+    <script src="soda-core.js"></script>
+    <script>
+      const live = SodaSite.bootSecondary({ flavor: "classic" });
+      const heroCan = document.getElementById("story-can");
+      const stickyCan = document.getElementById("story-can-sticky");
+      const berry = document.getElementById("berry-a");
+
+      live.bindPointerTilt(heroCan, { yawAmp: 32, pitchAmp: 14, distance: "350%" });
+      live.floatBerries([berry]);
+      live.revealOnScroll(".reveal", { y: 56 });
+      live.bindScrollOrbit(stickyCan, {
+        trigger: "#story-scroll",
+        start: "top top",
+        end: "bottom bottom",
+        fromYaw: -10,
+        toYaw: 48,
+        fromPitch: 82,
+        toPitch: 70,
+        fromDist: 320,
+        toDist: 260,
+        scrub: 1.2,
+      });
+
+      function prep(can) {
+        can.addEventListener("load", async () => {
+          await live.preloadTextures(can);
+          live.applyCanTexture(can, "classic");
+        });
+      }
+      prep(heroCan);
+      prep(stickyCan);
+    </script>
 </body>
 </html>

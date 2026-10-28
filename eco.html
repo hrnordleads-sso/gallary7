@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon.png" type="image/png" sizes="32x32">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.png">
     <link rel="stylesheet" href="site.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -21,14 +25,23 @@
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             <span>Soda</span>
         </a>
-        <nav class="nav" aria-label="Primary">
-            <a href="index.html" class="nav-item">Home</a>
-            <a href="ingredients.html" class="nav-item">Ingredients</a>
-            <a href="taste.html" class="nav-item">Taste</a>
-            <a href="eco.html" class="nav-item active">Eco</a>
-            <a href="reviews.html" class="nav-item">Reviews</a>
-        </nav>
-        <a class="contact-btn" href="contact.html">Contact Us</a>
+        <button type="button" class="nav-toggle" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+            <span class="nav-toggle-box" aria-hidden="true">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </span>
+        </button>
+        <div class="nav-shell" id="site-nav">
+            <nav class="nav" aria-label="Primary">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="ingredients.html" class="nav-item">Ingredients</a>
+                <a href="taste.html" class="nav-item">Taste</a>
+                <a href="eco.html" class="nav-item active" aria-current="page">Eco</a>
+                <a href="reviews.html" class="nav-item">Reviews</a>
+            </nav>
+            <a class="contact-btn" href="contact.html">Contact Us</a>
+        </div>
     </header>
 
     <main class="cinema">
@@ -47,13 +60,14 @@
             </div>
             <div class="stage">
                 <div class="stage-glow"></div>
-                <model-viewer class="leaf-orb l-a" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none"></model-viewer>
-                <model-viewer class="leaf-orb l-b" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="0.9" interaction-prompt="none"></model-viewer>
-                <model-viewer class="berry-orb b-a" id="berry-a" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.05" interaction-prompt="none"></model-viewer>
+                <model-viewer class="leaf-orb l-a" data-mv-desktop-only src="assets/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none"></model-viewer>
+                <model-viewer class="leaf-orb l-b" data-mv-desktop-only src="assets/leaves.glb" environment-image="neutral" exposure="0.9" interaction-prompt="none"></model-viewer>
+                <model-viewer class="berry-orb b-a" id="berry-a" data-mv-desktop-only src="assets/cherry.glb" environment-image="neutral" exposure="1.05" interaction-prompt="none"></model-viewer>
                 <model-viewer
                     id="story-can"
                     class="soda-can"
-                    src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb"
+                    src="assets/deit_soda2.glb"
+                    poster="assets/green-soda.png"
                     alt="Diet Soda story can"
                     shadow-intensity="0"
                     environment-image="neutral"
@@ -68,10 +82,13 @@
 
         <section class="section-split" id="story-scroll">
             <div class="sticky-can-wrap">
+                <!-- Phase A5: second can is desktop-only — discarded on phone before GLB load -->
                 <model-viewer
                     id="story-can-sticky"
                     class="soda-can soda-can--detail"
-                    src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb"
+                    data-mv-desktop-only
+                    src="assets/deit_soda2.glb"
+                    poster="assets/green-soda.png"
                     alt=""
                     shadow-intensity="0"
                     environment-image="neutral"
@@ -115,31 +132,46 @@
         </section>
     </main>
 
+    <script src="soda-nav.js"></script>
+    <script src="soda-mv-gate.js"></script>
     <script src="soda-assets.js"></script>
+    <script src="soda-model-ux.js"></script>
     <script src="soda-core.js"></script>
     <script>
+      const isPhone = !!(window.SodaMvGate && window.SodaMvGate.isPhone);
       const live = SodaSite.bootSecondary({ flavor: "classic" });
       const heroCan = document.getElementById("story-can");
       const stickyCan = document.getElementById("story-can-sticky");
       const berry = document.getElementById("berry-a");
 
-      live.bindPointerTilt(heroCan, { yawAmp: 32, pitchAmp: 14, distance: "350%" });
-      live.floatBerries([berry]);
+      if (heroCan) {
+        live.bindPointerTilt(heroCan, {
+          yawAmp: isPhone ? 20 : 32,
+          pitchAmp: isPhone ? 10 : 14,
+          distance: isPhone ? "300%" : "350%",
+        });
+      }
+      if (berry) {
+        live.floatBerries([berry]);
+      }
       live.revealOnScroll(".reveal", { y: 56 });
-      live.bindScrollOrbit(stickyCan, {
-        trigger: "#story-scroll",
-        start: "top top",
-        end: "bottom bottom",
-        fromYaw: -10,
-        toYaw: 48,
-        fromPitch: 82,
-        toPitch: 70,
-        fromDist: 320,
-        toDist: 260,
-        scrub: 1.2,
-      });
+      if (stickyCan) {
+        live.bindScrollOrbit(stickyCan, {
+          trigger: "#story-scroll",
+          start: "top top",
+          end: "bottom bottom",
+          fromYaw: -10,
+          toYaw: 48,
+          fromPitch: 82,
+          toPitch: 70,
+          fromDist: 320,
+          toDist: 260,
+          scrub: 1.2,
+        });
+      }
 
       function prep(can) {
+        if (!can) return;
         can.addEventListener("load", async () => {
           await live.preloadTextures(can);
           live.applyCanTexture(can, "classic");

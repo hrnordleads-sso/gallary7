@@ -192,7 +192,9 @@
 
   function startBubbles(container, options = {}) {
     if (!container) return () => {};
-    const intervalMs = reduced ? 1200 : options.intervalMs ?? 400;
+    // G7-15: no decorative bubble loop when the user prefers reduced motion
+    if (reduced) return () => {};
+    const intervalMs = options.intervalMs ?? 400;
     const maxConcurrent = options.maxConcurrent ?? (window.innerWidth < 768 ? 8 : 16);
 
     function createBubble() {
@@ -224,6 +226,14 @@
     document.documentElement.classList.add("soda-ready");
     document.body.classList.add("page-enter");
 
+    // Restore instantly after bfcache back/forward (avoids stuck leave state)
+    window.addEventListener("pageshow", (ev) => {
+      document.body.classList.remove("page-leave");
+      if (ev.persisted) {
+        document.body.classList.add("page-enter-done");
+      }
+    });
+
     if (reduced) {
       document.body.classList.add("page-enter-done");
       return;
@@ -231,22 +241,33 @@
 
     requestAnimationFrame(() => {
       document.body.classList.add("page-enter-active");
-      setTimeout(() => document.body.classList.add("page-enter-done"), 700);
+      setTimeout(() => document.body.classList.add("page-enter-done"), 420);
     });
 
     function onNavClick(e) {
       const link = e.target.closest("a[href]");
       if (!link) return;
       const href = link.getAttribute("href");
-      if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("http")) return;
+      if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return;
+      if (/^https?:/i.test(href)) return;
       if (link.target === "_blank") return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      // Same-page / hash-only: no transition delay
+      try {
+        const next = new URL(href, window.location.href);
+        if (next.pathname === window.location.pathname && next.search === window.location.search) {
+          return;
+        }
+      } catch (err) {
+        return;
+      }
 
       e.preventDefault();
       document.body.classList.add("page-leave");
       setTimeout(() => {
         window.location.href = href;
-      }, 380);
+      }, 220);
     }
 
     document.addEventListener("click", onNavClick);

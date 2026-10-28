@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon.png" type="image/png" sizes="32x32">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.png">
     <link rel="stylesheet" href="site.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -21,18 +25,27 @@
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             <span>Soda</span>
         </a>
-        <nav class="nav" aria-label="Primary">
-            <a href="index.html" class="nav-item">Home</a>
-            <a href="ingredients.html" class="nav-item active">Ingredients</a>
-            <a href="taste.html" class="nav-item">Taste</a>
-            <a href="eco.html" class="nav-item">Eco</a>
-            <a href="reviews.html" class="nav-item">Reviews</a>
-        </nav>
-        <a class="contact-btn" href="contact.html">Contact Us</a>
+        <button type="button" class="nav-toggle" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+            <span class="nav-toggle-box" aria-hidden="true">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </span>
+        </button>
+        <div class="nav-shell" id="site-nav">
+            <nav class="nav" aria-label="Primary">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="ingredients.html" class="nav-item active" aria-current="page">Ingredients</a>
+                <a href="taste.html" class="nav-item">Taste</a>
+                <a href="eco.html" class="nav-item">Eco</a>
+                <a href="reviews.html" class="nav-item">Reviews</a>
+            </nav>
+            <a class="contact-btn" href="contact.html">Contact Us</a>
+        </div>
     </header>
 
     <main class="cinema">
-        <section class="cinema-hero" style="min-height:88vh">
+        <section class="cinema-hero cinema-hero--detail">
             <div class="cinema-copy">
                 <p class="page-kicker" id="flavor-kicker">Diet Classic</p>
                 <h1 class="page-title">Inside<br>the can</h1>
@@ -42,12 +55,12 @@
                 </p>
                 <div class="flavor-switch">
                     <button type="button" class="flavor-card active" data-flavor="classic" aria-pressed="true">
-                        <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Green%20Soda.png" alt="">
+                        <img src="assets/green-soda.png" alt="">
                         <strong>Diet Classic</strong>
                         <span>$2.99</span>
                     </button>
                     <button type="button" class="flavor-card" data-flavor="blue" aria-pressed="false">
-                        <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Blue%20Soda.png" alt="" style="filter:brightness(0.85)">
+                        <img src="assets/blue-soda.png" alt="" style="filter:brightness(0.85)">
                         <strong>Zero Lime</strong>
                         <span>$2.99</span>
                     </button>
@@ -55,12 +68,13 @@
             </div>
             <div class="stage">
                 <div class="stage-glow"></div>
-                <model-viewer class="berry-orb b-a" id="berry-a" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none"></model-viewer>
-                <model-viewer class="berry-orb b-b" id="berry-b" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none"></model-viewer>
+                <model-viewer class="berry-orb b-a" id="berry-a" data-mv-keep-mobile src="assets/cherry.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none"></model-viewer>
+                <model-viewer class="berry-orb b-b" id="berry-b" data-mv-desktop-only src="assets/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none"></model-viewer>
                 <model-viewer
                     id="detail-can"
                     class="soda-can soda-can--detail"
-                    src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb"
+                    src="assets/deit_soda2.glb"
+                    poster="assets/green-soda.png"
                     alt="Diet Soda product detail"
                     shadow-intensity="0"
                     environment-image="neutral"
@@ -111,9 +125,13 @@
         </section>
     </main>
 
+    <script src="soda-nav.js"></script>
+    <script src="soda-mv-gate.js"></script>
     <script src="soda-assets.js"></script>
+    <script src="soda-model-ux.js"></script>
     <script src="soda-core.js"></script>
     <script>
+      const isPhone = !!(window.SodaMvGate && window.SodaMvGate.isPhone);
       const params = new URLSearchParams(window.location.search);
       const initial = params.get("flavor") === "blue" ? "blue" : "classic";
       const copy = {
@@ -133,7 +151,9 @@
 
       const live = SodaSite.bootSecondary({ flavor: initial });
       const can = document.getElementById("detail-can");
-      const berries = ["berry-a", "berry-b"].map((id) => document.getElementById(id));
+      const berries = ["berry-a", "berry-b"]
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
       const cards = Array.from(document.querySelectorAll(".flavor-card"));
 
       function applyCopy(flavor) {
@@ -152,34 +172,38 @@
       applyCopy(initial);
       live.floatBerries(berries);
       live.revealOnScroll(".reveal");
-      // Scroll owns camera orbit on detail (avoids fighting pointer tilt).
-      live.bindScrollOrbit(can, {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom bottom",
-        fromYaw: -18,
-        toYaw: 48,
-        fromPitch: 78,
-        toPitch: 98,
-        fromDist: 340,
-        toDist: 270,
-        scrub: 1.15,
-      });
-
-      can.addEventListener("load", async () => {
-        await live.preloadTextures(can);
-        live.applyCanTexture(can, initial);
-        berries.forEach((b) => {
-          b.src = SodaAssets.themes[initial].berry;
+      if (can) {
+        // Scroll owns camera orbit on detail (avoids fighting pointer tilt).
+        live.bindScrollOrbit(can, {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          fromYaw: -18,
+          toYaw: 48,
+          fromPitch: 78,
+          toPitch: 98,
+          fromDist: isPhone ? 300 : 340,
+          toDist: isPhone ? 250 : 270,
+          scrub: 1.15,
         });
-      });
+
+        can.addEventListener("load", async () => {
+          await live.preloadTextures(can);
+          live.applyCanTexture(can, initial);
+          berries.forEach((b) => {
+            b.src = SodaAssets.themes[initial].berry;
+          });
+        });
+      }
 
       cards.forEach((card) => {
         card.addEventListener("click", async () => {
           const flavor = card.dataset.flavor;
           applyCopy(flavor);
           history.replaceState(null, "", "ingredients.html?flavor=" + flavor);
-          await live.spinSwapFlavor(can, flavor, berries);
+          if (can) {
+            await live.spinSwapFlavor(can, flavor, berries);
+          }
         });
       });
     </script>

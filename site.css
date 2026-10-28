@@ -47,12 +47,17 @@ body.page-enter {
 body.page-enter-active,
 body.page-enter-done {
     opacity: 1;
-    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body.page-leave {
     opacity: 0;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.2s ease;
+}
+
+html.soda-ready body {
+    /* Avoid white flash before enter class attaches */
+    background-color: #011411;
 }
 
 a { color: inherit; }
@@ -94,12 +99,68 @@ a { color: inherit; }
     font-family: var(--font-heading);
     text-decoration: none;
     color: white;
+    position: relative;
+    z-index: 120;
+}
+
+/* Desktop: shell children participate in header flex (logo | nav | contact) */
+.nav-shell {
+    display: contents;
+}
+
+.nav-toggle {
+    display: none;
+    position: relative;
+    z-index: 120;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.45);
+    color: white;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.nav-toggle-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 18px;
+}
+
+.nav-toggle-bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+body.nav-open .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+body.nav-open .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+}
+
+body.nav-open .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-backdrop {
+    display: none;
 }
 
 .nav {
     display: flex;
     gap: 0.5rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     background: rgba(255, 255, 255, 0.08);
     padding: 0.4rem;
@@ -119,6 +180,7 @@ a { color: inherit; }
     padding: 0.5rem 1.2rem;
     border-radius: 100px;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-item:hover,
@@ -137,12 +199,19 @@ a { color: inherit; }
     font-size: 0.85rem;
     cursor: pointer;
     text-decoration: none;
+    display: inline-block;
+    text-align: center;
     transition: all 0.3s ease;
 }
 
 .contact-btn:hover {
     background: rgba(0, 0, 0, 0.7);
     transform: translateY(-2px);
+}
+
+.contact-btn[aria-current="page"] {
+    box-shadow: inset 0 0 0 1px var(--pink);
+    color: var(--pink);
 }
 
 .cinema {
@@ -158,6 +227,12 @@ a { color: inherit; }
     align-items: center;
     padding: 8.5rem 4% 4rem;
     position: relative;
+}
+
+@media (min-width: 769px) {
+    .cinema-hero--detail {
+        min-height: 88vh;
+    }
 }
 
 .cinema-copy {
@@ -534,6 +609,85 @@ body.blue-theme .stage-glow {
     margin-top: 0.75rem;
 }
 
+.form-hint {
+    margin-top: 0.35rem;
+    margin-bottom: 0.15rem;
+    color: var(--muted-color);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.field-error {
+    display: none;
+    color: #fecdd3;
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+.field-error.is-visible {
+    display: block;
+}
+
+.contact-form input.is-invalid,
+.contact-form textarea.is-invalid {
+    border-color: #fb7185;
+    background: rgba(127, 29, 29, 0.28);
+}
+
+.form-note.is-error {
+    color: #fecdd3;
+}
+
+.form-note.is-info,
+.form-note.is-success {
+    color: #bbf7d0;
+}
+
+/* Phase A6 — model-viewer loading / fallback */
+model-viewer.mv-pending {
+    opacity: 0.35;
+    transition: opacity 0.35s ease;
+}
+
+model-viewer.mv-ready {
+    opacity: 1;
+}
+
+model-viewer.mv-failed {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden;
+}
+
+.mv-fallback {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    gap: 0.65rem;
+    width: min(58vw, 260px);
+    margin: 0 auto;
+}
+
+.mv-fallback[hidden] {
+    display: none !important;
+}
+
+.mv-fallback-img {
+    width: min(48vw, 200px);
+    height: auto;
+    filter: drop-shadow(0 22px 36px rgba(0, 0, 0, 0.45));
+    transform: rotate(14deg);
+}
+
+.mv-fallback-copy {
+    color: var(--muted-color);
+    font-size: 0.85rem;
+    font-family: 'Manrope', sans-serif;
+}
+
 .shop-strip {
     width: min(1180px, 94vw);
     margin: 0 auto 5rem;
@@ -551,6 +705,24 @@ body.blue-theme .stage-glow {
     padding: 1.5rem;
     cursor: pointer;
     text-decoration: none;
+}
+
+.product-tile-shot {
+    position: absolute;
+    right: 6%;
+    top: 12%;
+    width: min(42vw, 160px);
+    height: auto;
+    filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
+    transform: rotate(18deg);
+    pointer-events: none;
+    z-index: 1;
+}
+
+@media (min-width: 769px) {
+    .product-tile-shot {
+        display: none;
+    }
 }
 
 .product-tile .soda-can {
@@ -620,36 +792,299 @@ body.blue-theme .stage-glow {
     .story-rail { gap: 18vh; padding-bottom: 10vh; }
     .story-beat:nth-child(even) { margin-left: 0; text-align: left; }
 
-    .header {
-        padding: 1.25rem 4%;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-    }
-
-    .nav {
-        order: 3;
-        width: 100%;
-        border-radius: 1.25rem;
-    }
-
     .berry-orb.b-a,
     .berry-orb.b-b { opacity: 0.55; }
     .berry-orb.b-c,
     .leaf-orb { display: none; }
 }
 
+/* Phase A4 — compact hamburger nav (phone only; desktop pill unchanged) */
+@media (max-width: 768px) {
+    .header {
+        padding: 0.7rem 4%;
+        gap: 0.75rem;
+        flex-wrap: nowrap;
+        min-height: 3.75rem;
+    }
+
+    .logo {
+        font-size: 1.05rem;
+    }
+
+    .logo svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        margin-left: auto;
+    }
+
+    .nav-shell {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(20rem, 86vw);
+        height: 100svh;
+        padding: 4.75rem 1.1rem 1.5rem;
+        background: rgba(1, 20, 17, 0.94);
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: -18px 0 48px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        transform: translateX(105%);
+        visibility: hidden;
+        pointer-events: none;
+        transition: transform 0.28s ease, visibility 0.28s ease;
+        z-index: 110;
+        overflow-y: auto;
+    }
+
+    body.nav-open .nav-shell {
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    body.blue-theme .nav-shell {
+        background: rgba(1, 12, 20, 0.94);
+    }
+
+    .nav {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 100%;
+        border-radius: 1.25rem;
+        padding: 0.45rem;
+        gap: 0.25rem;
+    }
+
+    .nav-item {
+        width: 100%;
+        text-align: left;
+        padding: 0.85rem 1rem;
+        font-size: 0.95rem;
+        border-radius: 0.9rem;
+    }
+
+    .contact-btn {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 105;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background: rgba(0, 0, 0, 0.45);
+        cursor: pointer;
+    }
+
+    .nav-backdrop[hidden] {
+        display: none !important;
+    }
+
+    body.nav-open {
+        overflow: hidden;
+    }
+
+    /* Phase A5 — secondary-page mobile readability (G7-10) */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    .cinema-hero {
+        min-height: auto;
+        padding: 5.25rem 4% 1.75rem;
+        gap: 0.85rem;
+        align-items: start;
+    }
+
+    /* Undo tablet `.stage { order: -1 }` so copy stays above the can */
+    .cinema-copy {
+        order: 1;
+        max-width: none;
+        width: 100%;
+    }
+
+    .stage {
+        order: 2;
+        min-height: 0;
+        height: min(34vh, 250px);
+        width: 100%;
+        margin: 0 auto 0.5rem;
+        overflow: hidden;
+    }
+
+    .page-title {
+        font-size: clamp(2.55rem, 11vw, 3.45rem);
+        line-height: 0.92;
+        margin-bottom: 0.85rem;
+    }
+
+    .page-lead {
+        font-size: 0.98rem;
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+    }
+
+    .soda-can,
+    .soda-can.soda-can--detail {
+        width: min(52vw, 200px);
+        height: min(32vh, 230px);
+        position: relative;
+        top: auto;
+    }
+
+    .berry-orb,
+    .berry-orb.b-a,
+    .berry-orb.b-b,
+    .berry-orb.b-c {
+        width: 64px !important;
+        height: 64px !important;
+        opacity: 0.42;
+    }
+
+    .berry-orb.b-a { top: 6%; left: 4%; }
+    .berry-orb.b-b { top: 62%; left: 78%; }
+
+    .flavor-switch {
+        gap: 0.65rem;
+        margin-top: 1rem;
+    }
+
+    .flavor-card {
+        width: calc(50% - 0.35rem);
+        min-width: 0;
+        padding: 0.75rem 0.65rem 0.9rem;
+        border-radius: 1.15rem;
+    }
+
+    .flavor-card img {
+        width: min(42vw, 96px);
+        margin-top: -2.4rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .flavor-card strong {
+        font-size: 0.72rem;
+    }
+
+    .section {
+        width: min(1120px, 92vw);
+        padding: 2rem 0 1.25rem;
+    }
+
+    .section-split {
+        padding: 1rem 0 3rem;
+        gap: 1.25rem;
+    }
+
+    .shop-strip {
+        width: min(1180px, 94vw);
+        margin: 0 auto 3rem;
+        gap: 0.9rem;
+    }
+
+    .product-tile {
+        min-height: 220px;
+        padding: 1.15rem;
+    }
+
+    .product-tile h3 {
+        font-size: 2rem;
+    }
+
+    .product-tile-shot {
+        width: min(36vw, 120px);
+        top: 10%;
+        right: 4%;
+    }
+
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .quote {
+        font-size: 1.05rem;
+    }
+
+    .stat-row {
+        gap: 0.75rem;
+    }
+
+    .glass-card {
+        padding: 1.2rem 1.25rem;
+        border-radius: 1.25rem;
+    }
+
+    .sticky-can-wrap:empty,
+    .sticky-can-wrap:not(:has(model-viewer)) {
+        display: none;
+    }
+
+    .contact-form {
+        margin-top: 1.1rem;
+        gap: 0.85rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 0.85rem 0.9rem;
+        border-radius: 0.9rem;
+        font-size: 1rem;
+    }
+
+    .contact-form textarea {
+        min-height: 120px;
+    }
+
+    .contact-form .primary-btn {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .story-rail {
+        gap: 10vh;
+    }
+
+    .story-beat .page-title {
+        font-size: clamp(2.2rem, 10vw, 3rem) !important;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .soda-can,
     .flavor-card img,
-    .product-tile .soda-can {
+    .product-tile .soda-can,
+    .bubble-img,
+    .berry-orb,
+    .leaf-orb,
+    .mv-fallback-img {
         animation: none !important;
         transition: none !important;
     }
     body.page-enter,
     body.page-enter-active,
+    body.page-enter-done,
     body.page-leave {
         opacity: 1 !important;
         transition: none !important;
+    }
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }

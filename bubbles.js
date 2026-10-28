@@ -1,11 +1,11 @@
-(function () {
+﻿(function () {
   const bubblesContainer = document.getElementById("bubbles-container");
   if (!bubblesContainer) return;
 
   function createBubble() {
     const bubble = document.createElement("img");
     bubble.src =
-      "https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/bubble.png";
+      "assets/bubble.png";
     bubble.className = "bubble-img";
     bubble.alt = "";
     const size = Math.random() * 20 + 10 + "px";

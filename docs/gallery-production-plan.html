@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gallery Production Plan — Diet Soda + Neural Monitor</title>
+  <style>
+    @page { size: A4; margin: 16mm 14mm; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", Calibri, Arial, sans-serif;
+      color: #111827;
+      line-height: 1.45;
+      font-size: 11pt;
+      margin: 0;
+    }
+    h1 { font-size: 20pt; margin: 0 0 6pt; color: #0b3d4a; }
+    h2 {
+      font-size: 13.5pt;
+      margin: 18pt 0 8pt;
+      padding-bottom: 4pt;
+      border-bottom: 2px solid #0b8a78;
+      color: #0b3d4a;
+      page-break-after: avoid;
+    }
+    h3 { font-size: 11.5pt; margin: 12pt 0 6pt; color: #134e4a; page-break-after: avoid; }
+    p, li { margin: 0 0 6pt; }
+    .meta {
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      border-radius: 8px;
+      padding: 10pt 12pt;
+      margin: 10pt 0 14pt;
+    }
+    .meta p { margin: 0 0 4pt; }
+    .meta p:last-child { margin: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8pt 0 12pt;
+      font-size: 10pt;
+    }
+    th, td {
+      border: 1px solid #d1d5db;
+      padding: 6pt 7pt;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #ecfdf5; color: #064e3b; }
+    .sev-crit { color: #b91c1c; font-weight: 700; }
+    .sev-high { color: #c2410c; font-weight: 700; }
+    .sev-med { color: #a16207; font-weight: 700; }
+    .sev-low { color: #334155; font-weight: 600; }
+    .box {
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10pt 12pt;
+      margin: 8pt 0 12pt;
+      background: #f8fafc;
+    }
+    .prompt {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 8.5pt;
+      white-space: pre-wrap;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 10pt;
+      margin: 8pt 0 14pt;
+      line-height: 1.4;
+    }
+    .tag {
+      display: inline-block;
+      background: #ccfbf1;
+      color: #115e59;
+      border-radius: 999px;
+      padding: 1pt 8pt;
+      font-size: 9pt;
+      font-weight: 600;
+      margin-right: 4pt;
+    }
+    ul { margin: 0 0 8pt; padding-left: 18pt; }
+    .page-break { page-break-before: always; }
+    .footer-note { font-size: 9pt; color: #64748b; margin-top: 16pt; }
+    strong { color: #0f172a; }
+  </style>
+</head>
+<body>
+
+  <h1>Gallery Production Plan</h1>
+  <p><strong>Diet Soda (Gallery 7)</strong> + <strong>Neural Monitor (Gallery 8)</strong></p>
+
+  <div class="meta">
+    <p><strong>Prepared for:</strong> Muzamil / Haseeb · share with ChatGPT / Cursor as build brief</p>
+    <p><strong>Client direction (Alexander):</strong> Keep working, fix bugs, make everything look and work perfectly by end of week — especially mobile.</p>
+    <p><strong>Live links:</strong></p>
+    <p>Gallery 7 — https://hrnordleads-sso.github.io/gallary7/</p>
+    <p>Gallery 8 — https://hrnordleads-sso.github.io/gallary8/</p>
+    <p><strong>Repos order:</strong> <span class="tag">1 · Gallery 7 first</span> <span class="tag">2 · Gallery 8 second</span></p>
+    <p><strong>Why this order:</strong> Soda is badly broken on phones (overlap, nav wrap, too many WebGL viewers, dead CTAs). Brain already has mobile-aware architecture — needs polish, not emergency surgery.</p>
+  </div>
+
+  <h2>1. Success criteria (end of week)</h2>
+  <ul>
+    <li>Both sites readable and usable on iPhone-class viewport (~390×844).</li>
+    <li>No critical overlaps of 3D assets over primary copy/CTAs.</li>
+    <li>All nav links and primary CTAs work.</li>
+    <li>Acceptable performance on mid-range phones (no constant freezes / rAF spam).</li>
+    <li>Desktop quality preserved (especially Gallery 7 approved homepage — do not redesign it; only fix mobile + bugs).</li>
+    <li>Hand-off ready public GitHub Pages links for Alexander.</li>
+  </ul>
+
+  <h2>2. Problem inventory — Gallery 7 (Diet Soda)</h2>
+  <p>Repos: <code>C:\Users\MADINA COMPUTERS\Projects\gallary7</code> · Stack: static HTML + GSAP + Google model-viewer · Host: GitHub Pages <code>/gallary7/</code></p>
+
+  <h3>2.1 Homepage — mobile critical</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Severity</th><th>Problem</th><th>Evidence / note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>G7-01</td><td class="sev-crit">CRITICAL</td><td>Cherries / can overlap headline &amp; body copy</td><td>Berries z-index 110 above text; unreadable on ~390px</td></tr>
+      <tr><td>G7-02</td><td class="sev-crit">CRITICAL</td><td>“Refreshingly Clean” cut off / cramped</td><td>No real phone layout; only weak @media 1200px</td></tr>
+      <tr><td>G7-03</td><td class="sev-crit">CRITICAL</td><td>Missing true mobile homepage layout</td><td>Need dedicated @media (max-width: 768)</td></tr>
+      <tr><td>G7-04</td><td class="sev-high">HIGH</td><td>~15 model-viewer instances</td><td>Heat, lag, model-viewer rAF timeouts</td></tr>
+      <tr><td>G7-05</td><td class="sev-high">HIGH</td><td>Shop Now does nothing</td><td>No href / navigation to taste.html</td></tr>
+      <tr><td>G7-06</td><td class="sev-high">HIGH</td><td>Carousel ← → dead</td><td>Buttons exist; no JS handlers</td></tr>
+      <tr><td>G7-07</td><td class="sev-high">HIGH</td><td>Contact Us uses fake mailto</td><td>Should go to contact.html (homepage change allowed only for this wire + mobile fixes)</td></tr>
+      <tr><td>G7-08</td><td class="sev-med">MED</td><td>Favicon 404</td><td>github.io/favicon.ico missing</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 Secondary pages — Taste / Ingredients / Eco / Reviews / Contact</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Severity</th><th>Problem</th><th>Evidence / note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>G7-09</td><td class="sev-crit">CRITICAL</td><td>Nav wraps; header ~190px tall</td><td>Reviews drops to second line; wastes viewport</td></tr>
+      <tr><td>G7-10</td><td class="sev-high">HIGH</td><td>3D can too large on mobile</td><td>Pushes copy down / feels overlapping</td></tr>
+      <tr><td>G7-11</td><td class="sev-high">HIGH</td><td>Eco loads multiple heavy cans</td><td>Double WebGL cost on phone</td></tr>
+      <tr><td>G7-12</td><td class="sev-med">MED</td><td>Taste rAF timed out warnings</td><td>model-viewer overload</td></tr>
+      <tr><td>G7-13</td><td class="sev-med">MED</td><td>Contact form only mailto</td><td>Needs clear success/validation UX</td></tr>
+      <tr><td>G7-14</td><td class="sev-med">MED</td><td>CDN asset dependency (GetLayers)</td><td>Offline / latency risk</td></tr>
+      <tr><td>G7-15</td><td class="sev-low">LOW</td><td>Page transition / reduced-motion polish</td><td>Partial today</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. Problem inventory — Gallery 8 (Neural Monitor)</h2>
+  <p>Repos: <code>C:\Users\MADINA COMPUTERS\Projects\gallary8</code> · Stack: Next.js 15 static export + R3F/Three · Host: GitHub Pages <code>/gallary8/</code></p>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Severity</th><th>Problem</th><th>Evidence / note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>G8-01</td><td class="sev-high">HIGH</td><td>Mobile copy contrast over dense cyan brain</td><td>Readable but soft; needs stronger scrim/spacing</td></tr>
+      <tr><td>G8-02</td><td class="sev-high">HIGH</td><td>Phone GPU heat / battery</td><td>Lite path exists; tune further (stars/DPR/bloom)</td></tr>
+      <tr><td>G8-03</td><td class="sev-med">MED</td><td>THREE.Clock deprecation warning</td><td>Console noise</td></tr>
+      <tr><td>G8-04</td><td class="sev-med">MED</td><td>Chapters 02–07 mobile framing QA</td><td>Brain vs narrative may collide mid-scroll</td></tr>
+      <tr><td>G8-05</td><td class="sev-med">MED</td><td>Slow first load on 3G</td><td>Brain bins + shaders; need soft loader</td></tr>
+      <tr><td>G8-06</td><td class="sev-med">MED</td><td>No clear fail state if assets missing</td><td>Can sit on black void</td></tr>
+      <tr><td>G8-07</td><td class="sev-low">LOW</td><td>HUD still busy on very small screens</td><td>Already partially responsive</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <h2>4. Execution plan</h2>
+
+  <h3>Phase A — Gallery 7 first (Days 1–3) → phone-perfect soda</h3>
+  <table>
+    <thead>
+      <tr><th>Step</th><th>Work</th><th>Done when</th><th>IDs</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>A1</strong></td><td>Mobile homepage layout: real max-width 768 rules; shrink can; hide/reduce berries on phone; text above 3D; fix z-index. Do NOT redesign desktop homepage look.</td><td>iPhone 390 home readable; titles not cut off</td><td>G7-01…03</td></tr>
+      <tr><td><strong>A2</strong></td><td>Perf: on phone mount 1 can + max 2–3 berries; keep richer scene on desktop only.</td><td>No rAF spam; flavor switch smooth</td><td>G7-04, G7-12</td></tr>
+      <tr><td><strong>A3</strong></td><td>Wire interactions: Shop Now → taste.html; arrows switch flavor; Contact → contact.html</td><td>All primary CTAs work</td><td>G7-05…07</td></tr>
+      <tr><td><strong>A4</strong></td><td>Shared mobile chrome: compact nav (horizontal scroll chips or simple menu); consistent short header on all pages</td><td>Nav not double-row mess</td><td>G7-09</td></tr>
+      <tr><td><strong>A5</strong></td><td>Secondary pages mobile: Taste, Ingredients, Eco, Reviews, Contact — can size, copy space, Eco single-can rule</td><td>Each page clean on phone screenshot</td><td>G7-10, G7-11, G7-13</td></tr>
+      <tr><td><strong>A6</strong></td><td>Polish: favicon, form feedback, loading placeholders, prefers-reduced-motion</td><td>QA checklist pass</td><td>G7-08, G7-14, G7-15</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Phase A exit:</strong> Soda site phone + desktop client-demo ready for Alexander.</p>
+
+  <h3>Phase B — Gallery 8 second (Days 4–5) → phone-perfect brain</h3>
+  <table>
+    <thead>
+      <tr><th>Step</th><th>Work</th><th>Done when</th><th>IDs</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>B1</strong></td><td>Mobile readability: stronger text scrim / spacing so copy clears brain</td><td>Arrival + mid chapters readable</td><td>G8-01</td></tr>
+      <tr><td><strong>B2</strong></td><td>Perf pass: confirm lite bin, bloom off on phone, DPR/stars; fix Clock warning</td><td>Stable feel on mid phone</td><td>G8-02, G8-03</td></tr>
+      <tr><td><strong>B3</strong></td><td>Walk chapters 01–07 on phone; fix framing collisions</td><td>No unreadable chapter</td><td>G8-04</td></tr>
+      <tr><td><strong>B4</strong></td><td>Load UX: soft loader + fail message if assets miss</td><td>No infinite black screen</td><td>G8-05, G8-06</td></tr>
+      <tr><td><strong>B5</strong></td><td>Final QA both sites side-by-side</td><td>End-of-week handoff</td><td>all</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Phase B exit:</strong> Brain production-ready; both links ready for Alexander.</p>
+
+  <h3>Phase C — Optional after approval</h3>
+  <ul>
+    <li>Agency portfolio tiles/URLs/screenshots sync for Neural Monitor + Diet Soda.</li>
+    <li>Only after Alexander confirms demos.</li>
+  </ul>
+
+  <h2>5. Hard rules for implementers (Cursor / ChatGPT)</h2>
+  <div class="box">
+    <ul>
+      <li><strong>Gallery 7 homepage desktop design is approved</strong> — do not restyle/redesign desktop hero. Mobile fixes + bug wiring only on homepage.</li>
+      <li>Reuse existing homepage assets (same GLBs, textures, bubble.png, GSAP, model-viewer). Do not add Three.js/R3F to Gallery 7 unless absolutely required.</li>
+      <li>Preserve GitHub Pages base paths: <code>/gallary7/</code> and <code>/gallary8/</code>.</li>
+      <li>Respect <code>prefers-reduced-motion</code>.</li>
+      <li>No Agency Website changes unless explicitly asked.</li>
+      <li>Finish Gallery 7 to 100% before starting Gallery 8 feature work (hotfix-only exception if brain is fully broken).</li>
+      <li>Test every change at ~390×844 mobile viewport and desktop.</li>
+    </ul>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>6. ChatGPT / Cursor prompt pack</h2>
+  <p>Copy one prompt at a time. Attach this PDF (or paste the relevant section). Do not ask the model to redesign the approved desktop homepage.</p>
+
+  <h3>Prompt A1 — Gallery 7 mobile homepage layout</h3>
+  <div class="prompt">You are a senior frontend engineer. Work ONLY in gallery project:
+C:\Users\MADINA COMPUTERS\Projects\gallary7
+
+Live reference: https://hrnordleads-sso.github.io/gallary7/
+
+STRICT RULES:
+- Desktop homepage look is APPROVED. Do NOT redesign desktop.
+- Fix mobile (max-width ~768) only + necessary bug wires.
+- Keep model-viewer + GSAP + existing GetLayers assets.
+- Preserve GitHub Pages path /gallary7/.
+
+Fix these IDs: G7-01, G7-02, G7-03
+- Cherries/can overlapping text (berries currently z-index 110)
+- Cut-off “Refreshingly Clean”
+- Add real phone layout: stack content, shrink can, reduce/hide berries on phone, keep text readable above 3D
+
+Deliver: code changes + short test notes for iPhone 390×844.</div>
+
+  <h3>Prompt A2 — Gallery 7 mobile performance</h3>
+  <div class="prompt">Continue in C:\Users\MADINA COMPUTERS\Projects\gallary7
+Fix G7-04 and G7-12.
+
+On phone viewports, mount only 1 main can + max 2–3 berry model-viewers.
+Keep richer berry/leaf scene on desktop only.
+Eliminate model-viewer rAF timeout spam on Taste/Home where possible.
+Do not change desktop visual density unless required for shared code.
+Test on mobile emulation and report before/after model-viewer counts.</div>
+
+  <h3>Prompt A3 — Wire dead CTAs</h3>
+  <div class="prompt">Continue in C:\Users\MADINA COMPUTERS\Projects\gallary7
+Fix G7-05, G7-06, G7-07 on index.html (minimal homepage edits allowed for wiring only):
+1) Shop Now → taste.html
+2) Carousel arrow buttons must switch Classic / Zero Lime like the flavor cards
+3) Contact Us → contact.html (not fake mailto)
+
+Do not redesign layout. Keep desktop look intact.</div>
+
+  <h3>Prompt A4 — Compact mobile nav (all soda pages)</h3>
+  <div class="prompt">Continue in C:\Users\MADINA COMPUTERS\Projects\gallary7
+Fix G7-09 across index.html + secondary pages + site.css.
+
+Mobile header/nav is wrapping (~190px) with Reviews on a second line.
+Implement a compact phone nav (horizontal scroll chips OR clean menu) with short header height on all pages.
+Desktop nav can stay pill/glass style.
+Ensure Contact still reaches contact.html.</div>
+
+  <h3>Prompt A5 — Secondary pages mobile pass</h3>
+  <div class="prompt">Continue in C:\Users\MADINA COMPUTERS\Projects\gallary7
+Fix G7-10, G7-11, G7-13 on:
+taste.html, ingredients.html, eco.html, reviews.html, contact.html (+ site.css / soda-core.js as needed)
+
+Requirements:
+- Readable mobile heroes; can not crush copy
+- Eco: only one active can on phone
+- Contact form: clear validation + success feedback (mailto OK if no backend)
+- Keep cinematic brand language; no generic template look
+- Prefer existing soda-core.js utilities</div>
+
+  <h3>Prompt A6 — Soda polish + QA</h3>
+  <div class="prompt">Continue in C:\Users\MADINA COMPUTERS\Projects\gallary7
+Fix G7-08, G7-14, G7-15 and do final Gallery 7 QA.
+
+- Add favicon for GitHub Pages
+- Soft loading placeholders for model-viewer where useful
+- Honor prefers-reduced-motion
+- Verify all pages 200 on GitHub Pages after deploy
+- Produce a checklist: Home/Taste/Ingredients/Eco/Reviews/Contact × mobile+desktop pass/fail</div>
+
+  <h3>Prompt B1–B4 — Gallery 8 (only after Gallery 7 done)</h3>
+  <div class="prompt">ONLY AFTER Gallery 7 Phase A is complete.
+Work in C:\Users\MADINA COMPUTERS\Projects\gallary8
+Live: https://hrnordleads-sso.github.io/gallary8/
+
+Fix in order:
+B1/G8-01 mobile text contrast/scrim over brain
+B2/G8-02 + G8-03 phone perf (lite bin, bloom, DPR, stars) + THREE.Clock warning
+B3/G8-04 chapters 01–07 mobile framing vs narrative
+B4/G8-05 + G8-06 loader + asset fail state
+
+Do not invent a new visual identity. Keep cyan wireframe brain look.
+Deploy via existing GitHub Pages / gh-pages flow.
+Return mobile screenshots notes for Arrival + at least 2 later chapters.</div>
+
+  <h2>7. Suggested week schedule</h2>
+  <table>
+    <thead>
+      <tr><th>Day</th><th>Focus</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Day 1</td><td>A1 + A2 (mobile home layout + perf)</td></tr>
+      <tr><td>Day 2</td><td>A3 + A4 (CTAs + nav chrome)</td></tr>
+      <tr><td>Day 3</td><td>A5 + A6 (secondary pages + soda QA/deploy)</td></tr>
+      <tr><td>Day 4</td><td>B1 + B2 (brain readability + perf)</td></tr>
+      <tr><td>Day 5</td><td>B3 + B4 + B5 (chapters, loader, dual-site final QA) → send links to Alexander</td></tr>
+    </tbody>
+  </table>
+
+  <p class="footer-note">
+    Document generated for production bug-fix sprint after Alexander’s direction to prioritize mobile quality by end of week.
+    Primary path: Gallery 7 → Gallery 8. Agency portfolio sync is optional Phase C.
+  </p>
+
+</body>
+</html>

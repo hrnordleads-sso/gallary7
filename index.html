@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diet Soda | Pure Zero Refreshment</title>
     <meta name="description" content="Experience the crisp, clean taste of Diet Soda. Zero sugar, zero compromise.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon.png" type="image/png" sizes="32x32">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
@@ -95,11 +99,67 @@ body.blue-theme {
     font-weight: 700;
     font-size: 1.2rem;
     font-family: var(--font-heading);
+    position: relative;
+    z-index: 120;
+}
+
+.nav-shell {
+    display: contents;
+}
+
+.nav-toggle {
+    display: none;
+    position: relative;
+    z-index: 120;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.45);
+    color: white;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.nav-toggle-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 18px;
+}
+
+.nav-toggle-bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+body.nav-open .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+body.nav-open .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+}
+
+body.nav-open .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-backdrop {
+    display: none;
 }
 
 .nav {
     display: flex;
     gap: 0.5rem;
+    flex-wrap: nowrap;
     background: var(--glass-bg);
     padding: 0.4rem;
     border-radius: 100px;
@@ -124,6 +184,7 @@ body.blue-theme {
     padding: 0.5rem 1.2rem;
     border-radius: 100px;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-item:hover,
@@ -247,6 +308,7 @@ body.blue-theme {
     width: fit-content;
     transition: all 0.3s ease;
     box-shadow: none;
+    text-decoration: none;
 }
 
 .primary-btn:hover {
@@ -495,6 +557,376 @@ body.blue-theme {
     .hero-right { align-items: center; text-align: center; }
     .side-title { align-self: center; text-align: center; }
 }
+
+/* Phase A1 — phone homepage layout only (desktop unchanged) */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    body {
+        height: 100svh;
+    }
+
+    .header {
+        padding: 0.7rem 3%;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: nowrap;
+        min-height: 3.75rem;
+    }
+
+    .logo {
+        font-size: 1.05rem;
+        flex-shrink: 0;
+    }
+
+    .logo svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        margin-left: auto;
+    }
+
+    .nav-shell {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(20rem, 86vw);
+        height: 100svh;
+        padding: 4.75rem 1.1rem 1.5rem;
+        background: rgba(1, 20, 17, 0.94);
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: -18px 0 48px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        transform: translateX(105%);
+        visibility: hidden;
+        pointer-events: none;
+        transition: transform 0.28s ease, visibility 0.28s ease;
+        z-index: 110;
+        overflow-y: auto;
+    }
+
+    body.nav-open .nav-shell {
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    body.blue-theme .nav-shell {
+        background: rgba(1, 12, 20, 0.94);
+    }
+
+    .nav.glass {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: none;
+        overflow: visible;
+        border-radius: 1.25rem;
+        padding: 0.45rem;
+        gap: 0.25rem;
+    }
+
+    .nav-item {
+        width: 100%;
+        text-align: left;
+        font-size: 0.95rem;
+        padding: 0.85rem 1rem;
+        border-radius: 0.9rem;
+    }
+
+    .contact-btn {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 105;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background: rgba(0, 0, 0, 0.45);
+        cursor: pointer;
+    }
+
+    .nav-backdrop[hidden] {
+        display: none !important;
+    }
+
+    body.nav-open {
+        overflow: hidden;
+    }
+
+    .hero {
+        height: 100svh;
+        padding: 4rem 4% 0.55rem;
+        align-items: stretch;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        height: 100%;
+        padding-top: 0;
+        gap: 0.2rem;
+    }
+
+    /* Undo tablet rule `.hero-center { order: -1 }` so copy stays first */
+    .leaves-container { order: 0; }
+    .hero-left { order: 1; }
+    .berries-container-bg { order: 2; }
+    .hero-center { order: 3; }
+    .berries-container { order: 4; }
+    .hero-right { order: 5; }
+
+    /* Copy above 3D — readable */
+    .hero-left {
+        position: relative;
+        z-index: 30;
+        flex: 0 0 auto;
+        height: auto;
+        min-height: 0;
+        padding: 0;
+        gap: 0.45rem;
+        max-width: 100%;
+        pointer-events: none;
+    }
+
+    .hero-left .cta-group,
+    .hero-left .primary-btn {
+        pointer-events: auto;
+    }
+
+    .main-title {
+        font-size: clamp(2.6rem, 12vw, 3.6rem);
+        line-height: 0.9;
+        white-space: normal;
+        max-width: 100%;
+        text-shadow: 0 2px 20px rgba(1, 20, 17, 0.9), 0 0 2px rgba(0, 0, 0, 0.55);
+    }
+
+    .description {
+        font-size: 0.86rem;
+        line-height: 1.4;
+        max-width: 19.5rem;
+        text-shadow: 0 2px 16px rgba(1, 20, 17, 0.88);
+    }
+
+    .primary-btn {
+        padding: 0.3rem 0.3rem 0.3rem 1.1rem;
+        gap: 1rem;
+        font-size: 0.85rem;
+    }
+
+    .plus-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+    }
+
+    .award-badge {
+        display: none; /* frees vertical space on phone; desktop unchanged */
+    }
+
+    /*
+      Can lives in normal flex flow (not full-bleed absolute overlay),
+      so it cannot cover CTA cards / side title.
+    */
+    .hero-center {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 100%;
+        flex: 0 0 auto;
+        height: 23svh;
+        margin: 0.9rem 0 0.45rem;
+        z-index: 5;
+        opacity: 1;
+        animation: fadeIn 1.2s ease-out 0.2s forwards;
+        background: radial-gradient(circle at center, rgba(16, 185, 129, 0.12) 0%, transparent 68%);
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 3;
+        overflow: visible;
+    }
+
+    .main-product-3d {
+        position: relative !important;
+        width: min(52vw, 190px);
+        height: min(22svh, 190px);
+        max-height: 22svh;
+        top: auto !important;
+        left: auto !important;
+        transform: rotate(10deg);
+        z-index: 5;
+        pointer-events: none;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .main-product-3d[camera-controls] {
+        pointer-events: auto;
+    }
+
+    /* A2: leaves + BG berries not mounted on phone; FG keeps ≤3 small berries in can band */
+    .berries-container-bg,
+    .leaves-container {
+        display: none !important;
+    }
+
+    .berries-container {
+        display: block;
+        z-index: 6;
+        pointer-events: none;
+    }
+
+    .berries-container .berry {
+        width: 54px;
+        height: 54px;
+        opacity: 0.42;
+    }
+
+    .berries-container .b1 {
+        top: 46%;
+        left: 6%;
+    }
+
+    .berries-container .b4 {
+        top: 50%;
+        left: auto;
+        right: 5%;
+    }
+
+    .berries-container .b6 {
+        top: 58%;
+        left: 72%;
+    }
+
+    .hero-right {
+        position: relative;
+        z-index: 30;
+        flex: 0 0 auto;
+        width: 100%;
+        height: auto;
+        padding: 0 0 0.35rem;
+        margin-top: 0.15rem;
+        align-items: center;
+        text-align: center;
+        pointer-events: none;
+        gap: 0.25rem;
+        order: 5;
+    }
+
+    .product-carousel {
+        align-items: center;
+        width: 100%;
+        gap: 0.3rem;
+        pointer-events: auto;
+    }
+
+    .carousel-cards {
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .card {
+        width: 88px;
+        padding: 0.45rem;
+        padding-top: 2.4rem;
+        border-radius: 18px;
+        gap: 0.35rem;
+    }
+
+    .card img {
+        width: 78px;
+        margin-top: -3.9rem;
+    }
+
+    .card:hover img {
+        transform: translateY(-8px) rotate(-7deg) scale(1.04) !important;
+    }
+
+    .carousel-nav {
+        justify-content: center;
+        gap: 0.55rem;
+    }
+
+    .nav-arrow {
+        width: 28px;
+        height: 28px;
+    }
+
+    .side-title {
+        align-self: center;
+        text-align: center;
+        width: 100%;
+        max-width: 100%;
+        font-size: clamp(1.45rem, 6.2vw, 1.95rem);
+        line-height: 1.05;
+        white-space: normal; /* G7-02: prevent cut-off */
+        padding: 0 0.75rem env(safe-area-inset-bottom, 0.3rem);
+        margin: 0.15rem 0 0.25rem;
+        overflow: visible;
+        text-shadow: 0 2px 18px rgba(1, 20, 17, 0.88);
+    }
+}
+
+/* Phase A6 — reduced motion + model load polish */
+model-viewer.mv-pending { opacity: 0.35; transition: opacity 0.35s ease; }
+model-viewer.mv-ready { opacity: 1; }
+model-viewer.mv-failed {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+}
+.mv-fallback {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+.mv-fallback[hidden] { display: none !important; }
+.mv-fallback-img {
+    width: min(42vw, 180px);
+    height: auto;
+    filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45));
+    transform: rotate(14deg);
+}
+.mv-fallback-copy {
+    color: var(--muted-color);
+    font-size: 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .main-product-3d,
+    .berry,
+    .leaf,
+    .bubble-img,
+    .mv-fallback-img {
+        animation: none !important;
+        transition: none !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -508,23 +940,32 @@ body.blue-theme {
             </svg>
             <span>Soda</span>
         </a>
-        <nav class="nav glass">
-            <a href="index.html" class="nav-item active">Home</a>
-            <a href="ingredients.html" class="nav-item">Ingredients</a>
-            <a href="taste.html" class="nav-item">Taste</a>
-            <a href="eco.html" class="nav-item">Eco</a>
-            <a href="reviews.html" class="nav-item">Reviews</a>
-        </nav>
-        <a class="contact-btn" href="mailto:hello@dietsoda.example" style="display:inline-block;text-decoration:none;text-align:center">Contact Us</a>
+        <button type="button" class="nav-toggle" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+            <span class="nav-toggle-box" aria-hidden="true">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </span>
+        </button>
+        <div class="nav-shell" id="site-nav">
+            <nav class="nav glass" aria-label="Primary">
+                <a href="index.html" class="nav-item active" aria-current="page">Home</a>
+                <a href="ingredients.html" class="nav-item">Ingredients</a>
+                <a href="taste.html" class="nav-item">Taste</a>
+                <a href="eco.html" class="nav-item">Eco</a>
+                <a href="reviews.html" class="nav-item">Reviews</a>
+            </nav>
+            <a class="contact-btn" href="contact.html" style="display:inline-block;text-decoration:none;text-align:center">Contact Us</a>
+        </div>
     </header>
 
     <main class="hero">
         <div class="hero-content">
             <div class="leaves-container">
-                <model-viewer class="leaf l1" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
-                <model-viewer class="leaf l2" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
-                <model-viewer class="leaf l3" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
-                <model-viewer class="leaf l4" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
+                <model-viewer class="leaf l1" data-mv-desktop-only src="assets/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
+                <model-viewer class="leaf l2" data-mv-desktop-only src="assets/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
+                <model-viewer class="leaf l3" data-mv-desktop-only src="assets/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
+                <model-viewer class="leaf l4" data-mv-desktop-only src="assets/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
             </div>
 
             <div class="hero-left">
@@ -538,10 +979,10 @@ body.blue-theme {
                     all in one sleek design.
                 </p>
                 <div class="cta-group">
-                    <button class="primary-btn">
+                    <a class="primary-btn" href="taste.html">
                         Shop Now
                         <span class="plus-icon">+</span>
-                    </button>
+                    </a>
                 </div>
                 <div class="award-badge">
                     <div class="award-icon">
@@ -558,13 +999,13 @@ body.blue-theme {
             </div>
 
             <div class="berries-container-bg">
-                <model-viewer class="berry b7" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-20deg 110deg 105%"></model-viewer>
-                <model-viewer class="berry b8" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="160deg 45deg 105%"></model-viewer>
-                <model-viewer class="berry b9" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 20deg 105%"></model-viewer>
+                <model-viewer class="berry b7" data-mv-desktop-only src="assets/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-20deg 110deg 105%"></model-viewer>
+                <model-viewer class="berry b8" data-mv-desktop-only src="assets/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="160deg 45deg 105%"></model-viewer>
+                <model-viewer class="berry b9" data-mv-desktop-only src="assets/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 20deg 105%"></model-viewer>
             </div>
 
             <div class="hero-center">
-                <model-viewer id="product-model" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb" alt="Diet Soda 3D Model" camera-controls
+                <model-viewer id="product-model" src="assets/deit_soda2.glb" poster="assets/green-soda.png" alt="Diet Soda 3D Model" camera-controls
                     disable-zoom shadow-intensity="0" environment-image="neutral" exposure="1.5"
                     interaction-prompt="none" camera-orbit="0deg 90deg 380%" field-of-view="30deg"
                     class="main-product-3d">
@@ -572,26 +1013,27 @@ body.blue-theme {
             </div>
 
             <div class="berries-container">
-                <model-viewer class="berry b1" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="45deg 120deg 105%"></model-viewer>
-                <model-viewer class="berry b2" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-120deg 45deg 105%"></model-viewer>
-                <model-viewer class="berry b3" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="200deg 90deg 105%"></model-viewer>
-                <model-viewer class="berry b4" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="10deg 20deg 105%"></model-viewer>
-                <model-viewer class="berry b5" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-45deg 160deg 105%"></model-viewer>
-                <model-viewer class="berry b6" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="80deg 75deg 105%"></model-viewer>
+                <!-- Mobile keeps b1/b4/b6 (≤3). Others desktop-only and discarded before load. -->
+                <model-viewer class="berry b1" src="assets/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="45deg 120deg 105%"></model-viewer>
+                <model-viewer class="berry b2" data-mv-desktop-only src="assets/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-120deg 45deg 105%"></model-viewer>
+                <model-viewer class="berry b3" data-mv-desktop-only src="assets/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="200deg 90deg 105%"></model-viewer>
+                <model-viewer class="berry b4" src="assets/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="10deg 20deg 105%"></model-viewer>
+                <model-viewer class="berry b5" data-mv-desktop-only src="assets/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-45deg 160deg 105%"></model-viewer>
+                <model-viewer class="berry b6" src="assets/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="80deg 75deg 105%"></model-viewer>
             </div>
 
             <div class="hero-right">
                 <div class="product-carousel">
                     <div class="carousel-cards">
                         <div class="card active" data-flavor="classic">
-                            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Green%20Soda.png" alt="Diet Classic">
+                            <img src="assets/green-soda.png" alt="Diet Classic">
                             <div class="card-info">
                                 <span>Diet Classic</span>
                                 <span>$2.99</span>
                             </div>
                         </div>
                         <div class="card" data-flavor="blue">
-                            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Blue%20Soda.png" alt="Zero Lime" style="filter: brightness(0.7);">
+                            <img src="assets/blue-soda.png" alt="Zero Lime" style="filter: brightness(0.7);">
                             <div class="card-info">
                                 <span>Zero Lime</span>
                                 <span>$2.99</span>
@@ -599,8 +1041,8 @@ body.blue-theme {
                         </div>
                     </div>
                     <div class="carousel-nav">
-                        <button class="nav-arrow">←</button>
-                        <button class="nav-arrow">→</button>
+                        <button type="button" class="nav-arrow" aria-label="Previous flavor">←</button>
+                        <button type="button" class="nav-arrow" aria-label="Next flavor">→</button>
                     </div>
                 </div>
                 <h2 class="side-title large-animation-1">
@@ -618,12 +1060,20 @@ body.blue-theme {
         </filter>
     </svg>
     <div style="display: none;">
-        <!-- Preload berry models to avoid lag during switch -->
-        <model-viewer src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/blueberry.glb"></model-viewer>
-        <model-viewer src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb"></model-viewer>
+        <!-- Desktop-only warm preload (discarded on phone before model-viewer loads) -->
+        <model-viewer data-mv-desktop-only src="assets/blueberry.glb"></model-viewer>
+        <model-viewer data-mv-desktop-only src="assets/cherry.glb"></model-viewer>
     </div>
 
+    <script src="soda-nav.js"></script>
+    <!-- Phase A2: strip desktop-only viewers before deferred model-viewer module runs -->
+    <script src="soda-mv-gate.js"></script>
+    <script src="soda-assets.js"></script>
+    <script src="soda-model-ux.js"></script>
+
     <script>
+const isPhone = !!(window.SodaMvGate && window.SodaMvGate.isPhone);
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const modelViewer = document.querySelector('#product-model');
 const berriesFG = document.querySelector('.berries-container');
 const berriesBG = document.querySelector('.berries-container-bg');
@@ -638,8 +1088,8 @@ let greenTexture = null;
 // Preload textures & Warm up shaders
 modelViewer.addEventListener('load', async () => {
     try {
-        blueTexture = await modelViewer.createTexture('https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/blue%20base%20color.jpg');
-        greenTexture = await modelViewer.createTexture('https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/green%20base%20color.jpg');
+        blueTexture = await modelViewer.createTexture('assets/blue-base-color.jpg');
+        greenTexture = await modelViewer.createTexture('assets/green-base-color.jpg');
 
         // Shader Warm-up: Briefly apply textures to compile shaders
         if (modelViewer.model) {
@@ -655,28 +1105,87 @@ modelViewer.addEventListener('load', async () => {
     } catch (e) { console.error("Texture preload failed", e); }
 });
 
+function activateFlavor(flavor) {
+    const target = flavor === 'blue' ? 'blue' : 'classic';
+    const active = document.querySelector('.card.active');
+    if (active && active.dataset.flavor === target) return;
+    switchFlavor(target);
+}
+
 cards.forEach(card => {
     card.addEventListener('click', () => {
-        if (isSwitching) return;
-        cards.forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
-        const flavor = card.dataset.flavor;
-        switchFlavor(flavor);
+        activateFlavor(card.dataset.flavor);
     });
 });
+
+const navArrows = document.querySelectorAll('.nav-arrow');
+const flavorOrder = ['classic', 'blue'];
+if (navArrows[0]) {
+    navArrows[0].addEventListener('click', () => {
+        const active = document.querySelector('.card.active');
+        const current = active?.dataset.flavor || 'classic';
+        const idx = flavorOrder.indexOf(current);
+        const prev = flavorOrder[(idx - 1 + flavorOrder.length) % flavorOrder.length];
+        activateFlavor(prev);
+    });
+}
+if (navArrows[1]) {
+    navArrows[1].addEventListener('click', () => {
+        const active = document.querySelector('.card.active');
+        const current = active?.dataset.flavor || 'classic';
+        const idx = flavorOrder.indexOf(current);
+        const next = flavorOrder[(idx + 1) % flavorOrder.length];
+        activateFlavor(next);
+    });
+}
 
 async function switchFlavor(flavor) {
     if (isSwitching) return;
     isSwitching = true;
+    const target = flavor === 'blue' ? 'blue' : 'classic';
+    cards.forEach(c => c.classList.toggle('active', c.dataset.flavor === target));
+
     const body = document.body;
     const berries = document.querySelectorAll('.berry');
     const heroCenter = document.querySelector('.hero-center');
+    const berrySrc = target === 'blue'
+        ? 'assets/blueberry.glb'
+        : 'assets/cherry.glb';
 
-    // 1. Background Animation
-    const targetColors = flavor === 'blue' ?
+    // Keep theme + lock in sync even if GSAP/rAF stalls under heavy desktop MV load
+    if (target === 'blue') body.classList.add('blue-theme');
+    else body.classList.remove('blue-theme');
+
+    const targetColors = target === 'blue' ?
         { inner: '#0b4f8a', mid: '#04294e', outer: '#010c14' } :
         { inner: '#0b8a78', mid: '#044e3b', outer: '#011411' };
 
+    // G7-15: keep flavor switch functional without spin/blur motion
+    if (prefersReducedMotion) {
+        body.style.setProperty('--bg-inner', targetColors.inner);
+        body.style.setProperty('--bg-mid', targetColors.mid);
+        body.style.setProperty('--bg-outer', targetColors.outer);
+        const tex = target === 'blue' ? blueTexture : greenTexture;
+        if (modelViewer.model && tex) {
+            modelViewer.model.materials.forEach((material) => {
+                if (material.pbrMetallicRoughness.baseColorTexture) {
+                    material.pbrMetallicRoughness.baseColorTexture.setTexture(tex);
+                }
+            });
+        }
+        berries.forEach((berry) => { berry.src = berrySrc; });
+        isSwitching = false;
+        return;
+    }
+
+    const unlockSwitch = () => {
+        isSwitching = false;
+        switchSpin = 0;
+        modelViewer.style.filter = 'none';
+    };
+    const unlockTimer = setTimeout(unlockSwitch, 2500);
+
+    // 1. Background Animation
     gsap.to(body, {
         '--bg-inner': targetColors.inner,
         '--bg-mid': targetColors.mid,
@@ -697,9 +1206,8 @@ async function switchFlavor(flavor) {
             modelViewer.style.filter = `blur(${spinObj.blur}px)`;
         },
         onComplete: async () => {
-            // SWAP at peak
-            if (flavor === 'blue') {
-                body.classList.add('blue-theme');
+            // SWAP at peak (theme class already applied above)
+            if (target === 'blue') {
                 if (modelViewer.model && blueTexture) {
                     modelViewer.model.materials.forEach(material => {
                         if (material.pbrMetallicRoughness.baseColorTexture) {
@@ -708,7 +1216,6 @@ async function switchFlavor(flavor) {
                     });
                 }
             } else {
-                body.classList.remove('blue-theme');
                 if (modelViewer.model && greenTexture) {
                     modelViewer.model.materials.forEach(material => {
                         if (material.pbrMetallicRoughness.baseColorTexture) {
@@ -730,14 +1237,22 @@ async function switchFlavor(flavor) {
                 onComplete: () => {
                     switchSpin = 0;
                     modelViewer.style.filter = 'none';
+                    clearTimeout(unlockTimer);
+                    unlockSwitch();
                 }
             });
         }
     });
 
     // 3. Berries "Hide & Reveal" with Dynamic Positioning
-    let completedBerries = 0;
-    berries.forEach((berry, i) => {
+    if (!berries.length) {
+        // Can-spin onComplete still unlocks; keep a safety if spin is skipped
+        return;
+    }
+
+    berries.forEach((berry) => {
+        gsap.killTweensOf(berry);
+
         const bW = berry.offsetWidth / 2;
         const bH = berry.offsetHeight / 2;
         const centerX = (window.innerWidth / 2 - berry.offsetLeft - bW);
@@ -768,7 +1283,7 @@ async function switchFlavor(flavor) {
             duration: 0.5,
             ease: "power2.in",
             onComplete: () => {
-                berry.src = flavor === 'blue' ? 'https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/blueberry.glb' : 'https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb';
+                berry.src = berrySrc;
                 heroCenter.style.zIndex = 50;
             }
         })
@@ -792,11 +1307,6 @@ async function switchFlavor(flavor) {
                 berry.dataset.baseY = nextBaseY;
                 berry.dataset.rx = 0;
                 berry.dataset.ry = 0;
-
-                completedBerries++;
-                if (completedBerries === berries.length) {
-                    isSwitching = false;
-                }
             }
         });
     });
@@ -822,22 +1332,38 @@ window.addEventListener('mousemove', (e) => {
 
 function animate() {
     const time = Date.now() * 0.001;
-    // Target camera position based on mouse
-    // Smoothly interpolate current mouse to target mouse
     currentMouse.x += (mouse.x - currentMouse.x) * 0.05;
     currentMouse.y += (mouse.y - currentMouse.y) * 0.05;
 
-    // Tilt the product can + add switch spin
-    modelViewer.cameraOrbit = `${(currentMouse.x * 40) + switchSpin}deg ${90 + (currentMouse.y * 20)}deg 380%`;
+    if (modelViewer) {
+        const yawAmp = isPhone ? 24 : 40;
+        const pitchAmp = isPhone ? 12 : 20;
+        const dist = isPhone ? '320%' : '380%';
+        modelViewer.cameraOrbit = `${(currentMouse.x * yawAmp) + switchSpin}deg ${90 + (currentMouse.y * pitchAmp)}deg ${dist}`;
+    }
 
-    // Update parallax containers - Always
-    berriesFG.style.transform = `translate(${currentMouse.x * 60}px, ${currentMouse.y * 60}px)`;
-    berriesBG.style.transform = `translate(${currentMouse.x * -30}px, ${currentMouse.y * -30}px)`;
-    leavesBG.style.transform = `translate(${currentMouse.x * -15}px, ${currentMouse.y * -15}px)`;
+    if (berriesFG) {
+        berriesFG.style.transform = `translate(${currentMouse.x * (isPhone ? 28 : 60)}px, ${currentMouse.y * (isPhone ? 28 : 60)}px)`;
+    }
+    if (berriesBG && !isPhone) {
+        berriesBG.style.transform = `translate(${currentMouse.x * -30}px, ${currentMouse.y * -30}px)`;
+    }
+    if (leavesBG && !isPhone) {
+        leavesBG.style.transform = `translate(${currentMouse.x * -15}px, ${currentMouse.y * -15}px)`;
+    }
 
-    // Update each berry with its own smoothing and float - ONLY IF NOT SWITCHING
+    // Phone: light float only (skip expensive per-berry repulsion + getBoundingClientRect)
     if (!isSwitching) {
         allBerries.forEach((berry, i) => {
+            if (isPhone) {
+                const dur = 5 + (i % 3);
+                const phase = (time + i * 0.7) * (Math.PI * 2 / dur);
+                const floatY = Math.sin(phase) * 10;
+                const floatAngle = Math.cos(phase) * 4;
+                berry.style.transform = `translateY(${floatY}px) rotate(${floatAngle}deg)`;
+                return;
+            }
+
             const berryRect = berry.getBoundingClientRect();
             const berryX = berryRect.left + berryRect.width / 2;
             const berryY = berryRect.top + berryRect.height / 2;
@@ -855,7 +1381,6 @@ function animate() {
                 speedMult = 1 + force * 5;
             }
 
-            // Lerp repulsion values
             let rx = parseFloat(berry.dataset.rx) || 0;
             let ry = parseFloat(berry.dataset.ry) || 0;
             let angle = parseFloat(berry.dataset.angle) || 0;
@@ -870,7 +1395,6 @@ function animate() {
             berry.dataset.ry = ry;
             berry.dataset.angle = angle;
 
-            // Floating effect
             const dur = [5, 7, 6, 8, 5.5, 6.5, 9, 11, 10][i % 9];
             const phase = (time + i * 0.7) * (Math.PI * 2 / dur);
             const floatY = Math.sin(phase) * 15;
@@ -880,28 +1404,35 @@ function animate() {
         });
     }
 
-    // Update leaves with float - ALWAYS
-    document.querySelectorAll('.leaf').forEach((leaf, i) => {
-        const dur = 10 + i * 2;
-        const phase = (time + i * 1.2) * (Math.PI * 2 / dur);
-        const floatY = Math.sin(phase) * 20;
-        const floatX = Math.cos(phase * 0.5) * 15;
-        const floatAngle = Math.sin(phase * 0.3) * 15;
-        leaf.style.transform = `translate(${floatX}px, ${floatY}px) rotate(${floatAngle}deg)`;
-    });
+    if (!isPhone) {
+        document.querySelectorAll('.leaf').forEach((leaf, i) => {
+            const dur = 10 + i * 2;
+            const phase = (time + i * 1.2) * (Math.PI * 2 / dur);
+            const floatY = Math.sin(phase) * 20;
+            const floatX = Math.cos(phase * 0.5) * 15;
+            const floatAngle = Math.sin(phase * 0.3) * 15;
+            leaf.style.transform = `translate(${floatX}px, ${floatY}px) rotate(${floatAngle}deg)`;
+        });
+    }
 
     requestAnimationFrame(animate);
 }
 
-animate();
+if (!prefersReducedMotion) {
+    animate();
+}
 
-// Bubbles Generator using bubble.png
+// Bubbles Generator using bubble.png (disabled under reduced motion)
 const bubblesContainer = document.getElementById('bubbles-container');
+const bubbleCap = isPhone ? 6 : 18;
+const bubbleEvery = isPhone ? 900 : 400;
 function createBubble() {
-    if (!bubblesContainer) return;
+    if (!bubblesContainer || prefersReducedMotion) return;
+    if (bubblesContainer.childElementCount >= bubbleCap) return;
     const bubble = document.createElement('img');
-    bubble.src = 'https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/bubble.png';
+    bubble.src = (window.SodaAssets && SodaAssets.bubble) || 'assets/bubble.png';
     bubble.className = 'bubble-img';
+    bubble.alt = '';
     const size = Math.random() * 20 + 10 + 'px';
     bubble.style.width = size;
     bubble.style.height = 'auto';
@@ -915,7 +1446,9 @@ function createBubble() {
     bubblesContainer.appendChild(bubble);
     setTimeout(() => bubble.remove(), duration * 1000);
 }
-setInterval(createBubble, 400);
+if (!prefersReducedMotion) {
+    setInterval(createBubble, bubbleEvery);
+}
     </script>
 </body>
 </html>

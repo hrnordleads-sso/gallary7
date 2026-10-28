@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taste | Diet Soda</title>
+    <meta name="description" content="Diet Classic and Zero Lime — two crisp profiles, one clean finish.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+<body>
+    <div id="bubbles-container"></div>
+
+    <header class="header">
+        <a class="logo" href="index.html">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span>Soda</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="ingredients.html" class="nav-item">Ingredients</a>
+            <a href="taste.html" class="nav-item active">Taste</a>
+            <a href="eco.html" class="nav-item">Eco</a>
+            <a href="reviews.html" class="nav-item">Reviews</a>
+        </nav>
+        <a class="contact-btn" href="mailto:hello@dietsoda.example">Contact Us</a>
+    </header>
+
+    <main class="page">
+        <p class="page-kicker">Flavor profiles</p>
+        <h1 class="page-title">Two crisp<br>finishes</h1>
+        <p class="page-lead">
+            Switch between Diet Classic and Zero Lime — same cold sparkle, different fruit lift.
+            Both stay bright from first sip to empty can.
+        </p>
+
+        <div class="grid grid-2">
+            <article class="glass-card">
+                <h3>Diet Classic</h3>
+                <p>Cherry-forward brightness with a soft berry roundness. Clean, cold, and built for all-day pours.</p>
+                <ul>
+                    <li>Opening: ripe cherry</li>
+                    <li>Mid: soft berry</li>
+                    <li>Finish: dry sparkle</li>
+                </ul>
+            </article>
+            <article class="glass-card">
+                <h3>Zero Lime</h3>
+                <p>Cool citrus snap with a mineral edge. Sharper on the tongue, still zero sugar and zero sticky fade.</p>
+                <ul>
+                    <li>Opening: fresh lime zest</li>
+                    <li>Mid: cool citrus</li>
+                    <li>Finish: icy mineral</li>
+                </ul>
+            </article>
+        </div>
+
+        <a class="primary-btn" href="index.html">
+            Switch flavors on Home
+            <span class="plus-icon">+</span>
+        </a>
+    </main>
+
+    <script src="bubbles.js"></script>
+</body>
+</html>

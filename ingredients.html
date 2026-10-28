@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredients | Diet Soda</title>
+    <meta name="description" content="What’s inside Pure Zero — clean sparkling water, natural flavors, and zero sugar.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+<body>
+    <div id="bubbles-container"></div>
+
+    <header class="header">
+        <a class="logo" href="index.html">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span>Soda</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="ingredients.html" class="nav-item active">Ingredients</a>
+            <a href="taste.html" class="nav-item">Taste</a>
+            <a href="eco.html" class="nav-item">Eco</a>
+            <a href="reviews.html" class="nav-item">Reviews</a>
+        </nav>
+        <a class="contact-btn" href="mailto:hello@dietsoda.example">Contact Us</a>
+    </header>
+
+    <main class="page">
+        <p class="page-kicker">Inside the can</p>
+        <h1 class="page-title">Clean<br>formula</h1>
+        <p class="page-lead">
+            Every pour stays crisp because the list stays short — sparkling water, natural flavor,
+            plant sweetness, and nothing that dulls the finish.
+        </p>
+
+        <div class="grid grid-2">
+            <article class="glass-card">
+                <h3>Core blend</h3>
+                <ul>
+                    <li>Carbonated water</li>
+                    <li>Natural berry & citrus flavors</li>
+                    <li>Stevia leaf extract</li>
+                    <li>Citric acid for lift</li>
+                </ul>
+            </article>
+            <article class="glass-card">
+                <h3>Left out on purpose</h3>
+                <ul>
+                    <li>Zero sugar</li>
+                    <li>No artificial colors</li>
+                    <li>No sticky aftertaste syrups</li>
+                    <li>No mystery blends</li>
+                </ul>
+            </article>
+        </div>
+
+        <div class="stat-row">
+            <div class="glass-card stat"><strong>0g</strong><span>Sugar per can</span></div>
+            <div class="glass-card stat"><strong>4</strong><span>Named ingredients</span></div>
+            <div class="glass-card stat"><strong>12oz</strong><span>Ice-cold pour</span></div>
+        </div>
+
+        <a class="primary-btn" href="taste.html">
+            Explore taste
+            <span class="plus-icon">+</span>
+        </a>
+    </main>
+
+    <script src="bubbles.js"></script>
+</body>
+</html>

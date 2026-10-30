@@ -651,11 +651,13 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
         font-size: 0.9rem;
     }
 
+    /* Backdrop must sit BELOW .header stacking context (z-index 100+).
+       Previously z-index 105 covered the drawer and ate all link taps. */
     .nav-backdrop {
         display: block;
         position: fixed;
         inset: 0;
-        z-index: 105;
+        z-index: 90;
         border: 0;
         padding: 0;
         margin: 0;
@@ -665,6 +667,10 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
 
     .nav-backdrop[hidden] {
         display: none !important;
+    }
+
+    body.nav-open .header {
+        z-index: 200;
     }
 
     body.nav-open {

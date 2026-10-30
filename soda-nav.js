@@ -19,9 +19,14 @@
   }
 
   function focusableInShell() {
+    // Prefer getClientRects — position:fixed items often have offsetParent === null
     return Array.from(
       shell.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
-    ).filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
+    ).filter(
+      (el) =>
+        !el.hasAttribute("disabled") &&
+        el.getClientRects().length > 0
+    );
   }
 
   function setOpen(open) {
